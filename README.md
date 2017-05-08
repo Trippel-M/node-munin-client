@@ -9,7 +9,11 @@ Example
 
     var Munin = require('munin.js');
     var munin = new Munin('munin-node.example.com');
-
+    
+    munin.connect(function (err, client) {
+    
+		});
+    
     munin.list(console.log);
     munin.version(console.log);
     munin.nodes(console.log);

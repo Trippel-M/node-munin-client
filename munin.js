@@ -41,9 +41,12 @@ Munin.prototype = {
 					// drain that buffer into the socket
 					client.write(munin.preConnectBuffer);
 				}
-				callback(client);
+				callback(undefined, client);
 			}
 		);
+		client.on('error', function (error) {
+			callback(error);
+		});
 		client.on('data', function (data) {
 			// fetch data from the socket; this happens to always be in chunks
 			// ending in \n for Munin, with my testing, so this makes things
@@ -71,7 +74,7 @@ Munin.prototype = {
 		if (!this.connection && !this.connecting) {
 			this.connect(callback);
 		} else {
-			callback(this.connection);
+			callback(undefined, this.connection);
 		}
 	},
 
